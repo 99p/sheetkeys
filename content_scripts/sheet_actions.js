@@ -1,33 +1,33 @@
 SheetActions = {
   menuItems: {
-    copy: "Copy",
+    copy: "コピー\\(C\\)Ctrl\\+C",
     // This string with a space at the end is meant to match the button "Delete row X" where x is some number.
     // There is also a "Delete rows/columns" button which we do not want to match.
-    deleteRow: "Delete row ",
-    deleteColumn: "Delete column ",
-    deleteValues: "Delete values",
-    rowAbove: "Row above",
-    rowBelow: "Row below",
-    freeze: "Freeze", // Clicking this creates a sub-menu.
-    freezeRow: "Up to current row", // This is a sub-item of the "Freeze" menu.
-    freezeColumn: "Up to current column", // This is a sub-item of the "Freeze" menu.
+    deleteRow: "行 .* を削除\\(D\\)",
+    deleteColumn: "列 .* を削除\\(E\\)",
+    deleteValues: "値を削除\\(V\\)",
+    rowAbove: "上に .* 行\\(R\\)",
+    rowBelow: "下に .* 行\\(B\\)",
+    freeze: "固定", // Clicking this creates a sub-menu.
+    freezeRow: "現在の行", // This is a sub-item of the "Freeze" menu.
+    freezeColumn: "現在の列", // This is a sub-item of the "Freeze" menu.
     // The "moveRowUp" menu item won't yet exist if multiple rows are selected.
-    moveRowUp: "Move row up",
-    moveRowDown: "Move row down",
+    moveRowUp: "行を上に移動\\(K\\)",
+    moveRowDown: "行を下に移動\\(J\\)",
     moveRowsUp: "Move rows up",
     moveRowsDown: "Move rows down",
-    moveColumnLeft: "Move column left",
-    moveColumnRight: "Move column right",
+    moveColumnLeft: "列を左に移動\\(M\\)",
+    moveColumnRight: "列を右に移動\\(I\\)",
     moveColumnsLeft: "Move columns left",
     moveColumnsRight: "Move columns right",
-    paste: "Paste",
-    undo: "Undo",
-    redo: "Redo",
-    fullScreen: "Full screen",
-    mergeAll: "Merge all",
-    mergeHorizontally: "Merge horizontally",
-    mergeVertically: "Merge vertically",
-    unmerge: "Unmerge"
+    paste: "貼り付け",
+    undo: "元に戻す",
+    redo: "やり直し",
+    fullScreen: "全画面",
+    mergeAll: "すべて結合\\(A\\)",
+    mergeHorizontally: "横方向に結合\\(H\\)",
+    mergeVertically: "縦方向に結合\\(V\\)",
+    unmerge: "結合を解除\\(U\\)"
   },
 
   buttons: {
@@ -41,7 +41,7 @@ SheetActions = {
 
   // You can find the names of these color swatches by hoverig over the swatches and seeing the tooltip.
   colors: {
-    white: "white",
+    white: "白",
     lightYellow3: "light yellow 3",
     lightCornflowBlue3: "light cornflower blue 3",
     lightPurple3: "light purple 3",
@@ -84,7 +84,9 @@ SheetActions = {
     const menuItems = document.querySelectorAll(".goog-menuitem");
     for (let menuItem of Array.from(menuItems)) {
       const label = menuItem.innerText;
-      if (label && label.indexOf(caption) === 0) {
+      // console.log('caption', caption)
+      console.log('label', label)
+      if (label && label.search(caption) === 0) {
         return menuItem;
       }
     }
@@ -124,6 +126,8 @@ SheetActions = {
     if (UI.mode == "visualColumn")
       this.clickMenu(this.menuItems.deleteColumn);
     else
+      this.selectRow();
+      this.clickMenu(this.menuItems.copy);
       this.clickMenu(this.menuItems.deleteRow);
 
     // Clear any row-level selections we might've had.
